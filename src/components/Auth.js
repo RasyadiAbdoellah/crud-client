@@ -7,7 +7,7 @@ export default class Auth extends Component {
     super(props);
 
     this.state = {
-      isSignIn: false,
+      isSignIn: true,
       username: '',
       password: '',
       passConfirm: ''
@@ -41,6 +41,9 @@ export default class Auth extends Component {
       .then(res => {
         console.log(res);
         this.props.authDataHandler(res.data);
+      })
+      .catch(err => {
+        console.log(err.response.data);
       });
   };
 
@@ -67,7 +70,7 @@ export default class Auth extends Component {
             </>
           ) : (
             <>
-              <label>Sign up</label>
+              <label>Register</label>
               <input
                 name='username'
                 placeholder='Enter username'
@@ -91,7 +94,7 @@ export default class Auth extends Component {
           <input type='submit' />
         </form>
 
-        <button onClick={this.toggleSignIn}>{isSignIn ? 'Sign up' : 'Sign in'}</button>
+        <button onClick={this.toggleSignIn}>{isSignIn ? 'Register' : 'Sign in'}</button>
       </div>
     );
   }

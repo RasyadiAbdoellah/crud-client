@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Auth from './Auth';
-import axios from 'axios';
-import API_URL from '../config';
+import UserActions from './UserActions';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,18 +17,11 @@ export default class App extends Component {
     this.setState({ isAuth: true, user: data });
   };
 
-  signOut = () => {
-    axios
-      .delete(API_URL + '/sign-out', {
-        headers: { Authorization: `Bearer ${this.state.user.token}` }
-      })
-      .then(res => {
-        console.log(res);
-        this.setState({
-          isAuth: false,
-          user: null
-        });
-      });
+  signOutHandler = () => {
+    this.setState({
+      isAuth: false,
+      user: null
+    });
   };
 
   render() {
@@ -42,7 +34,7 @@ export default class App extends Component {
     return (
       <div>
         {!isAuth && <Auth authDataHandler={this.authDataHandler} />}
-        {isAuth && <button onClick={this.signOut}> Sign out</button>}
+        {isAuth && <UserActions user={user} signOutHandler={this.signOutHandler} />}
       </div>
     );
   }
