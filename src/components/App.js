@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Auth from './Auth';
 
 export default class App extends Component {
   constructor(props) {
@@ -6,9 +7,14 @@ export default class App extends Component {
 
     this.state = {
       isAuth: false,
-      token: null
+      token: null,
+      todos: []
     };
   }
+
+  signInHandler = data => {
+    this.setState({ isAuth: true, token: data.token });
+  };
 
   render() {
     // COMPONENTS TO BUILD
@@ -16,6 +22,10 @@ export default class App extends Component {
     // To-do Component that displays, creates, updates, and deletes owned resources
     // To-do Item component. A direct child of To-do and CRUDS the to-do items
     // Client-side session logic
-    return <div>This is an app</div>;
+    return (
+      <div>
+        <Auth />
+      </div>
+    );
   }
 }
