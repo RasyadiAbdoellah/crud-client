@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import API_URL from '../config';
 
 export default class Auth extends Component {
   constructor(props) {
@@ -20,11 +22,33 @@ export default class Auth extends Component {
     this.setState({ isSignIn: !this.state.isSignIn });
   };
 
+  submitAuth = event => {
+    event.preventDefault();
+
+    const { username, password, isSignIn } = this.state;
+
+    const routeOptions = { signIn: '/sign-in', signUp: '/sign-up' };
+    const route = isSignIn ? routeOptions.signIn : routeOptions.signUp;
+
+    axios
+      .post(API_URL + route, { username, password })
+      .then(res => {
+        if (!isSignIn) {
+          return axios.post(API_URL + routeOptions.signIn, { username, password });
+        }
+        return res;
+      })
+      .then(res => {
+        console.log(res);
+        this.props.authDataHandler(res.data);
+      });
+  };
+
   render() {
     const { isSignIn, username, password, passConfirm } = this.state;
     return (
       <div>
-        <form>
+        <form onSubmit={this.submitAuth}>
           {isSignIn ? (
             <>
               <label>Sign in</label>

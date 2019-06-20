@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Auth from './Auth';
+import axios from 'axios';
+import API_URL from '../config';
 
 export default class App extends Component {
   constructor(props) {
@@ -7,16 +9,31 @@ export default class App extends Component {
 
     this.state = {
       isAuth: false,
-      token: null,
+      user: null,
       todos: []
     };
   }
 
-  signInHandler = data => {
-    this.setState({ isAuth: true, token: data.token });
+  authDataHandler = data => {
+    this.setState({ isAuth: true, user: data });
+  };
+
+  signOut = () => {
+    axios
+      .delete(API_URL + '/sign-out', {
+        headers: { Authorization: `Bearer ${this.state.user.token}` }
+      })
+      .then(res => {
+        console.log(res);
+        this.setState({
+          isAuth: false,
+          user: null
+        });
+      });
   };
 
   render() {
+    const { isAuth, user } = this.state;
     // COMPONENTS TO BUILD
     // auth component that sends token up to top level component on login
     // To-do Component that displays, creates, updates, and deletes owned resources
@@ -24,7 +41,8 @@ export default class App extends Component {
     // Client-side session logic
     return (
       <div>
-        <Auth />
+        {!isAuth && <Auth authDataHandler={this.authDataHandler} />}
+        {isAuth && <button onClick={this.signOut}> Sign out</button>}
       </div>
     );
   }
