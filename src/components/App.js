@@ -19,15 +19,16 @@ export default class App extends Component {
 
     this.state = {
       isAuth,
-      user,
-      todos: []
+      user
     };
   }
 
+  //auth data lives here so both auth and useractions components have access to it
   authDataHandler = data => {
     this.setState({ isAuth: true, user: data });
   };
 
+  //signout handler clears state. local and session storage clearing happen in useractions component
   signOutHandler = () => {
     this.setState({
       isAuth: false,
@@ -37,11 +38,6 @@ export default class App extends Component {
 
   render() {
     const { isAuth, user } = this.state;
-    // COMPONENTS TO BUILD
-    // auth component that sends token up to top level component on login
-    // To-do Component that displays, creates, updates, and deletes owned resources
-    // To-do Item component. A direct child of To-do and CRUDS the to-do items
-    // Client-side session logic
     return (
       <div className='container'>
         <div className='columns is-8 is-variable is-centered is-vcentered'>

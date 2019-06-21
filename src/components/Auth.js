@@ -17,6 +17,8 @@ export default class Auth extends Component {
     };
   }
 
+  // --------------EVENT HANDLERS------------------
+
   errorHandler = error => {
     this.setState({ showError: true, errorMessage: error });
     setTimeout(() => {
@@ -24,7 +26,6 @@ export default class Auth extends Component {
     }, 2500);
   };
 
-  //EVENT HANDLERS
   changeHandler = event => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     this.setState({ [event.target.name]: value });
@@ -34,23 +35,26 @@ export default class Auth extends Component {
     this.setState({ isSignIn: !this.state.isSignIn });
   };
 
-  //Post request to server is done here with results being passed up
+  //Post request to server is triggered here with results being passed up to parent
+
   submitAuth = event => {
     event.preventDefault();
 
     const { username, password, passConfirm, isSignIn } = this.state;
 
+    //dynamic url based on isSignIn flag
     const routeOptions = { signIn: '/sign-in', signUp: '/sign-up' };
     const route = isSignIn ? routeOptions.signIn : routeOptions.signUp;
 
+    //exit out of function early if the passwords don't match and send an alert
     if (!isSignIn && password !== passConfirm) {
-      this.errorHandler('passwords do not match');
-      return null;
+      return this.errorHandler('passwords do not match');
     }
 
     axios
       .post(API_URL + route, { username, password })
       .then(res => {
+        // if it's in sign up mode, automatically sign in
         if (!isSignIn) {
           return axios.post(API_URL + routeOptions.signIn, { username, password });
         }
@@ -58,10 +62,14 @@ export default class Auth extends Component {
       })
       .then(res => {
         res.data.token = { Authorization: `Bearer ${res.data.token}` };
+        // remember me determines whether auth goes to local or session storage
         if (this.state.rememberMe) {
           localStorage.setItem('user', JSON.stringify(res.data));
+        } else {
+          sessionStorage.setItem('user', JSON.stringify(res.data));
         }
-        sessionStorage.setItem('user', JSON.stringify(res.data));
+
+        //pass to parent
         this.props.authDataHandler(res.data);
       })
       .catch(err => {

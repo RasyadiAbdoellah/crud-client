@@ -13,18 +13,28 @@ export default class TodoList extends Component {
       todos: [],
       todosIsGetting: true,
       todosGetFailed: false,
-      error: null,
-      title: ''
+      alertMessage: '',
+      title: '',
+      isError: false
     };
   }
+  alertHandler = (message, error = false) => {
+    this.setState({ alertMessage: message, showMessage: true, isError: error ? true : false });
+    setTimeout(() => {
+      this.setState({ showMessage: false, isError: false });
+    }, 2500);
+  };
 
   changeHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  // Unlike auth and user actions, todolist does not send data up because todos don't need to be a global object.
   newEntry = event => {
     event.preventDefault();
-
+    if (this.state.title.length === 0) {
+      this.alertHandler('Entry cannot be empty', true);
+    }
     axios
       .post(API_URL + route, { title: this.state.title }, { headers: this.props.user.token })
       .then(res => {
@@ -33,10 +43,12 @@ export default class TodoList extends Component {
         this.setState({ todos });
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
+        this.alertHandler('Something went wrong', true);
       });
   };
 
+  //update and delete handlers are actually called from the child todo component. Having the child pass in info for these functions to process makes the most sense in my head
   updateEntry = updateInfo => {
     axios
       .patch(
@@ -51,7 +63,8 @@ export default class TodoList extends Component {
         this.setState({ todos });
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
+        this.alertHandler('Something went wrong', true);
       });
   };
 
@@ -65,11 +78,12 @@ export default class TodoList extends Component {
         this.setState({ todos });
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
+        this.alertHandler('Something went wrong', true);
       });
   };
 
-  //get request on mount. may move this to constructor
+  //get request on mount. This, combined with session/local storage allows a refresh to refetch data. may move this to constructor
   componentDidMount() {
     axios
       .get(API_URL + route, {
@@ -79,12 +93,21 @@ export default class TodoList extends Component {
         this.setState({ todosIsGetting: false, todos: res.data });
       })
       .catch(err => {
-        this.setState({ todosIsGetting: false, todosGetFailed: true, error: err.response });
+        this.setState({ todosIsGetting: false, todosGetFailed: true });
+        console.error(err);
       });
   }
 
   render() {
-    const { todos, todosGetFailed, todosIsGetting, title } = this.state;
+    const {
+      todos,
+      todosGetFailed,
+      todosIsGetting,
+      title,
+      showMessage,
+      alertMessage,
+      isError
+    } = this.state;
     return (
       <div className='container mt-3'>
         <h1 className='title'>Things I need to do</h1>
@@ -107,6 +130,9 @@ export default class TodoList extends Component {
                 Add
               </button>
             </div>
+            {showMessage && (
+              <p className={'help ' + (isError ? 'is-danger' : 'is-info')}>{alertMessage}</p>
+            )}
           </div>
         </form>
         <div>

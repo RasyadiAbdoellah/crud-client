@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import API_URL from '../config';
 
+//User actions is its own component to help with readability
 export default class UserActions extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,9 @@ export default class UserActions extends Component {
     };
   }
 
+  // ---------------- EVENT HANDLERS ------------------
+
+  // general alert handler that manipulates flags that determine if message is visible and what colour it should be
   alertHandler = (message, error = false) => {
     this.setState({ alertMessage: message, showMessage: true, isError: error ? true : false });
     setTimeout(() => {
@@ -26,6 +30,7 @@ export default class UserActions extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  // axios patch is done here. similar flow as sign in
   changPw = event => {
     const { passConfirm, newPassword } = this.state;
     event.preventDefault();
@@ -52,6 +57,7 @@ export default class UserActions extends Component {
       });
   };
 
+  // sign out clears local and session before API call to prevent possible stale token
   signOut = () => {
     localStorage.clear();
     sessionStorage.clear();
@@ -60,14 +66,15 @@ export default class UserActions extends Component {
         headers: this.props.user.token
       })
       .then(res => {
-        console.log(res);
         this.props.signOutHandler();
       })
       .catch(err => {
-        this.alertHandler('Something went wrong!');
-        console.log(err.response.data);
+        this.alertHandler('Something went wrong! Try refreshing and signing back in');
+        console.error(err.response);
       });
   };
+
+  //----------------- RENDER-------------------
   render() {
     const { passConfirm, newPassword, showMessage, alertMessage, isError } = this.state;
     return (
