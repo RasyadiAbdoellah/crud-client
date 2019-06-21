@@ -86,6 +86,7 @@ export default class UserActions extends Component {
               <input
                 className='input'
                 type='text'
+                type='password'
                 name='newPassword'
                 value={newPassword}
                 placeholder='New password'
@@ -96,6 +97,7 @@ export default class UserActions extends Component {
               <input
                 className='input'
                 type='text'
+                type='password'
                 name='passConfirm'
                 value={passConfirm}
                 placeholder='Confirm new password'

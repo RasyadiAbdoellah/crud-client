@@ -102,6 +102,7 @@ export default class Auth extends Component {
                 required
                 className='input'
                 name='password'
+                type='password'
                 placeholder='Enter password'
                 value={password}
                 onChange={this.changeHandler}
@@ -114,6 +115,7 @@ export default class Auth extends Component {
                 required
                 className='input'
                 name='passConfirm'
+                type='password'
                 placeholder='Confirm password'
                 value={passConfirm}
                 onChange={this.changeHandler}
