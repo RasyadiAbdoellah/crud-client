@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Auth from './Auth';
 import UserActions from './UserActions';
+import TodoList from './TodoList';
 
 export default class App extends Component {
   constructor(props) {
@@ -33,8 +34,16 @@ export default class App extends Component {
     // Client-side session logic
     return (
       <div>
-        {!isAuth && <Auth authDataHandler={this.authDataHandler} />}
-        {isAuth && <UserActions user={user} signOutHandler={this.signOutHandler} />}
+        {!isAuth ? (
+          <div>
+            <Auth authDataHandler={this.authDataHandler} />
+          </div>
+        ) : (
+          <div>
+            <UserActions user={user} signOutHandler={this.signOutHandler} />
+            <TodoList user={user} />
+          </div>
+        )}
       </div>
     );
   }

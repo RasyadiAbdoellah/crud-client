@@ -39,11 +39,11 @@ export default class Auth extends Component {
         return res;
       })
       .then(res => {
-        console.log(res);
+        res.data.token = { Authorization: `Bearer ${res.data.token}` };
         this.props.authDataHandler(res.data);
       })
       .catch(err => {
-        console.log(err.response.data);
+        console.log(err.response);
       });
   };
 

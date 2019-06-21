@@ -23,7 +23,7 @@ export default class UserActions extends Component {
       .patch(
         API_URL + '/change-pass',
         { oldPassword, newPassword },
-        { headers: { Authorization: `Bearer ${this.props.user.token}` } }
+        { headers: this.props.user.token }
       )
       .then(() => {
         this.setState({
@@ -40,7 +40,7 @@ export default class UserActions extends Component {
   signOut = () => {
     axios
       .delete(API_URL + '/sign-out', {
-        headers: { Authorization: `Bearer ${this.props.user.token}` }
+        headers: this.props.user.token
       })
       .then(res => {
         console.log(res);
