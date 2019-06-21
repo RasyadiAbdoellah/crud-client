@@ -1,0 +1,14 @@
+@import '~bulma/bulma';
+
+$base-margin: 0.5rem;
+.mb {
+  &-1 {
+    margin-bottom: $base-margin;
+  }
+  &-2 {
+    margin-bottom: $base-margin * 2;
+  }
+  &-3 {
+    margin-bottom: $base-margin * 3;
+  }
+}

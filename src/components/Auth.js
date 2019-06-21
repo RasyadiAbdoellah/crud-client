@@ -11,10 +11,20 @@ export default class Auth extends Component {
       username: '',
       password: '',
       passConfirm: '',
-      remeberMe: false
+      remeberMe: false,
+      showError: false,
+      errorMessage: ''
     };
   }
 
+  errorHandler = error => {
+    this.setState({ showError: true, errorMessage: error });
+    setTimeout(() => {
+      this.setState({ showError: false });
+    }, 2500);
+  };
+
+  //EVENT HANDLERS
   changeHandler = event => {
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     this.setState({ [event.target.name]: value });
@@ -24,13 +34,19 @@ export default class Auth extends Component {
     this.setState({ isSignIn: !this.state.isSignIn });
   };
 
+  //Post request to server is done here with results being passed up
   submitAuth = event => {
     event.preventDefault();
 
-    const { username, password, isSignIn } = this.state;
+    const { username, password, passConfirm, isSignIn } = this.state;
 
     const routeOptions = { signIn: '/sign-in', signUp: '/sign-up' };
     const route = isSignIn ? routeOptions.signIn : routeOptions.signUp;
+
+    if (!isSignIn && password !== passConfirm) {
+      this.errorHandler('passwords do not match');
+      return null;
+    }
 
     axios
       .post(API_URL + route, { username, password })
@@ -49,59 +65,69 @@ export default class Auth extends Component {
         this.props.authDataHandler(res.data);
       })
       .catch(err => {
-        console.log(err.response);
+        console.log(err.response.data);
+        const message = err.response.data;
+        this.errorHandler(message);
       });
   };
 
   render() {
-    const { isSignIn, username, password, passConfirm } = this.state;
+    const { isSignIn, username, password, passConfirm, errorMessage, showError } = this.state;
     return (
-      <div>
-        <form onSubmit={this.submitAuth}>
-          {isSignIn ? (
-            <>
-              <label>Sign in</label>
+      <div className='section'>
+        <form className='mb-2' onSubmit={this.submitAuth}>
+          <div className='field'>
+            <label className='label'>{isSignIn ? 'Sign in' : 'Sign up'}</label>
+            <div className='control'>
               <input
+                required
+                className='input'
                 name='username'
                 placeholder='Enter username'
                 value={username}
                 onChange={this.changeHandler}
               />
+            </div>
+          </div>
+          <div className='field'>
+            <div className='control'>
               <input
+                required
+                className='input'
                 name='password'
                 placeholder='Enter password'
                 value={password}
                 onChange={this.changeHandler}
               />
-            </>
-          ) : (
-            <>
-              <label>Register</label>
+            </div>
+          </div>
+          {!isSignIn && (
+            <div className='field'>
               <input
-                name='username'
-                placeholder='Enter username'
-                value={username}
-                onChange={this.changeHandler}
-              />
-              <input
-                name='password'
-                placeholder='Enter password'
-                value={password}
-                onChange={this.changeHandler}
-              />
-              <input
+                required
+                className='input'
                 name='passConfirm'
                 placeholder='Confirm password'
                 value={passConfirm}
                 onChange={this.changeHandler}
               />
-            </>
+            </div>
           )}
-          <input name='rememberMe' type='checkbox' onChange={this.changeHandler} /> Remember me
-          <input type='submit' />
+          <label className='checkbox'>
+            <input name='rememberMe' type='checkbox' onChange={this.changeHandler} />
+            Remember me
+          </label>
+          <div className='field'>
+            <div className='control'>
+              <input className='button is-primary is-fullwidth' type='submit' />
+            </div>
+          </div>
+          {showError && <p className='has-text-danger is-centered'>{errorMessage}</p>}
         </form>
 
-        <button onClick={this.toggleSignIn}>{isSignIn ? 'Register' : 'Sign in'}</button>
+        <button className='button is-secondary is-fullwidth' onClick={this.toggleSignIn}>
+          {isSignIn ? 'Register' : 'Sign in'}
+        </button>
       </div>
     );
   }
