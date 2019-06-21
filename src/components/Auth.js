@@ -11,7 +11,7 @@ export default class Auth extends Component {
       username: '',
       password: '',
       passConfirm: '',
-      remeberMe: false,
+      rememberMe: false,
       showError: false,
       errorMessage: ''
     };
