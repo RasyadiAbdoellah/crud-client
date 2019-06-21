@@ -38,6 +38,8 @@ export default class UserActions extends Component {
   };
 
   signOut = () => {
+    localStorage.clear();
+    sessionStorage.clear();
     axios
       .delete(API_URL + '/sign-out', {
         headers: this.props.user.token

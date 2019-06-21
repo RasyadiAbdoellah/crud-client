@@ -7,9 +7,19 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
+    let isAuth, user;
+    if (sessionStorage.length !== 0) {
+      user = JSON.parse(sessionStorage.getItem('user'));
+    }
+    if (localStorage.length !== 0) {
+      user = JSON.parse(localStorage.getItem('user'));
+    }
+
+    isAuth = user ? true : false;
+
     this.state = {
-      isAuth: false,
-      user: null,
+      isAuth,
+      user,
       todos: []
     };
   }

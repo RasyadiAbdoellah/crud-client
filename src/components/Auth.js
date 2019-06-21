@@ -10,12 +10,14 @@ export default class Auth extends Component {
       isSignIn: true,
       username: '',
       password: '',
-      passConfirm: ''
+      passConfirm: '',
+      remeberMe: false
     };
   }
 
   changeHandler = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    this.setState({ [event.target.name]: value });
   };
 
   toggleSignIn = () => {
@@ -40,6 +42,10 @@ export default class Auth extends Component {
       })
       .then(res => {
         res.data.token = { Authorization: `Bearer ${res.data.token}` };
+        if (this.state.rememberMe) {
+          localStorage.setItem('user', JSON.stringify(res.data));
+        }
+        sessionStorage.setItem('user', JSON.stringify(res.data));
         this.props.authDataHandler(res.data);
       })
       .catch(err => {
@@ -91,6 +97,7 @@ export default class Auth extends Component {
               />
             </>
           )}
+          <input name='rememberMe' type='checkbox' onChange={this.changeHandler} /> Remember me
           <input type='submit' />
         </form>
 
