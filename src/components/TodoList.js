@@ -49,7 +49,7 @@ export default class TodoList extends Component {
       .then(() => {
         const { todos } = this.state;
         const index = todos.findIndex(e => e.id === updateInfo.id);
-        todos[index] = { title: updateInfo.change };
+        todos[index] = Object.assign({}, todos[index], { title: updateInfo.change });
         this.setState({ todos });
       })
       .catch(err => {

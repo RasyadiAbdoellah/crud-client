@@ -14,8 +14,8 @@ export default class Todo extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  toggleHandler = key => {
-    this.setState({ [key]: !this.state[key] });
+  toggleEdit = () => {
+    this.setState({ value: this.props.content, editable: !this.state.editable });
   };
 
   submitUpdate = event => {
@@ -25,7 +25,7 @@ export default class Todo extends Component {
       change: this.state.value,
       id: this.props.id
     });
-    this.toggleHandler('editable');
+    this.toggleEdit();
   };
   deletion = () => {
     this.props.deleteHandler(this.props.id);
@@ -44,10 +44,8 @@ export default class Todo extends Component {
             <input type='submit' />
           </form>
         )}
-        <button onClick={() => this.toggleHandler('editable')}>
-          {editable ? 'cancel' : 'edit'}
-        </button>
-        <button onClick={this.deletion}>delete</button>
+        <button onClick={this.toggleEdit}>{editable ? 'cancel' : 'edit'}</button>
+        {!editable && <button onClick={this.deletion}>delete</button>}
       </div>
     );
   }
