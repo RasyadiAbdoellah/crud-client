@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/crud-client/static/css/main.103b76a2.chunk.css",
-    "main.js": "/crud-client/static/js/main.1b198d69.chunk.js",
-    "main.js.map": "/crud-client/static/js/main.1b198d69.chunk.js.map",
+    "main.js": "/crud-client/static/js/main.a661386e.chunk.js",
+    "main.js.map": "/crud-client/static/js/main.a661386e.chunk.js.map",
     "runtime~main.js": "/crud-client/static/js/runtime~main.ee355b39.js",
     "runtime~main.js.map": "/crud-client/static/js/runtime~main.ee355b39.js.map",
-    "static/js/2.bb129d04.chunk.js": "/crud-client/static/js/2.bb129d04.chunk.js",
-    "static/js/2.bb129d04.chunk.js.map": "/crud-client/static/js/2.bb129d04.chunk.js.map",
+    "static/js/2.e3641bbe.chunk.js": "/crud-client/static/js/2.e3641bbe.chunk.js",
+    "static/js/2.e3641bbe.chunk.js.map": "/crud-client/static/js/2.e3641bbe.chunk.js.map",
     "index.html": "/crud-client/index.html",
-    "precache-manifest.7f17fd03cff8c5789411a4440ffdeff8.js": "/crud-client/precache-manifest.7f17fd03cff8c5789411a4440ffdeff8.js",
+    "precache-manifest.8f25cda5013e812bd5e32ba2a55c83c1.js": "/crud-client/precache-manifest.8f25cda5013e812bd5e32ba2a55c83c1.js",
     "service-worker.js": "/crud-client/service-worker.js",
     "static/css/main.103b76a2.chunk.css.map": "/crud-client/static/css/main.103b76a2.chunk.css.map"
   }
