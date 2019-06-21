@@ -30,7 +30,6 @@ export default class TodoList extends Component {
       .then(res => {
         const todos = this.state.todos;
         todos.push(res.data);
-        console.log(res.data);
         this.setState({ todos });
       })
       .catch(err => {
@@ -39,7 +38,6 @@ export default class TodoList extends Component {
   };
 
   updateEntry = updateInfo => {
-    console.log(updateInfo);
     axios
       .patch(
         API_URL + route + '/' + updateInfo.id,
@@ -88,14 +86,29 @@ export default class TodoList extends Component {
   render() {
     const { todos, todosGetFailed, todosIsGetting, title } = this.state;
     return (
-      <div>
-        <form onSubmit={this.newEntry}>
-          <label>Add a new entry</label>
-          <input type='text' name='title' value={title} onChange={this.changeHandler} />
-          <input type='submit' />
+      <div className='container mt-3'>
+        <h1 className='title'>Things I need to do</h1>
+        <form className='mb-3' onSubmit={this.newEntry}>
+          <div className='field'>
+            <label className='label'>Add a new entry</label>
+            <div className='field has-addons'>
+              <div className='control'>
+                <input
+                  className='input'
+                  type='text'
+                  name='title'
+                  value={title}
+                  onChange={this.changeHandler}
+                />
+              </div>
+              <div className='control' />
+              <button className='button is-info' type='submit'>
+                Add
+              </button>
+            </div>
+          </div>
         </form>
         <div>
-          <h2>Things I need to do</h2>
           {todosIsGetting ? (
             <p>Loading...</p>
           ) : todosGetFailed ? (

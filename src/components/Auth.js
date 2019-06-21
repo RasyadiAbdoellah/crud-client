@@ -65,7 +65,6 @@ export default class Auth extends Component {
         this.props.authDataHandler(res.data);
       })
       .catch(err => {
-        console.log(err.response.data);
         const message = err.response.data;
         this.errorHandler(message);
       });
