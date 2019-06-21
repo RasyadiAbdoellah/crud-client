@@ -7,33 +7,48 @@ export default class UserActions extends Component {
     super(props);
 
     this.state = {
-      oldPassword: '',
-      newPassword: ''
+      passConfirm: '',
+      newPassword: '',
+      alertMessage: '',
+      showMessage: false,
+      isError: false
     };
   }
+
+  alertHandler = (message, error = false) => {
+    this.setState({ alertMessage: message, showMessage: true, isError: error ? true : false });
+    setTimeout(() => {
+      this.setState({ showMessage: false, isError: false });
+    }, 2500);
+  };
 
   changeHandler = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   changPw = event => {
-    const { oldPassword, newPassword } = this.state;
+    const { passConfirm, newPassword } = this.state;
     event.preventDefault();
+
+    if (passConfirm !== newPassword) {
+      return this.alertHandler('Passwords do not match', true);
+    }
     axios
       .patch(
         API_URL + '/change-pass',
-        { oldPassword, newPassword },
+        { passConfirm, newPassword },
         { headers: this.props.user.token }
       )
       .then(() => {
         this.setState({
-          oldPassword: '',
-          newPassword: ''
+          newPassword: '',
+          passConfirm: ''
         });
-        //do something to show success
+        this.alertHandler('Password Successfully changed');
       })
       .catch(err => {
-        console.log(err.response.data);
+        console.error(err);
+        this.alertHandler('Something went wrong, try again later', true);
       });
   };
 
@@ -46,23 +61,53 @@ export default class UserActions extends Component {
       })
       .then(res => {
         console.log(res);
-        //do something to show success
         this.props.signOutHandler();
       })
       .catch(err => {
+        this.alertHandler('Something went wrong!');
         console.log(err.response.data);
       });
   };
   render() {
-    const { oldPassword, newPassword } = this.state;
+    const { passConfirm, newPassword, showMessage, alertMessage, isError } = this.state;
     return (
       <div>
-        <form onSubmit={this.changPw}>
-          <input type='text' name='oldPassword' value={oldPassword} onChange={this.changeHandler} />
-          <input type='text' name='newPassword' value={newPassword} onChange={this.changeHandler} />
-          <input type='submit' value='Change Password' />
+        <form className='my-3' onSubmit={this.changPw}>
+          <div className='field'>
+            <label className='label'>Change Password</label>
+            <div className='control'>
+              <input
+                className='input'
+                type='text'
+                name='newPassword'
+                value={newPassword}
+                placeholder='New password'
+                onChange={this.changeHandler}
+              />
+            </div>
+            <div className='control'>
+              <input
+                className='input'
+                type='text'
+                name='passConfirm'
+                value={passConfirm}
+                placeholder='Confirm new password'
+                onChange={this.changeHandler}
+              />
+            </div>
+          </div>
+          <input
+            className='button is-fullwidth is-outlined is-info'
+            type='submit'
+            value='Change Password'
+          />
         </form>
-        <button onClick={this.signOut}> Sign out</button>
+        <button className='button is-fullwidth is-outlined is-danger' onClick={this.signOut}>
+          Sign out
+        </button>
+        {showMessage && (
+          <p className={isError ? 'has-text-danger' : 'has-text-info'}>{alertMessage}</p>
+        )}
       </div>
     );
   }

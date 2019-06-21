@@ -94,6 +94,7 @@ export default class TodoList extends Component {
             <div className='field has-addons'>
               <div className='control'>
                 <input
+                  required
                   className='input'
                   type='text'
                   name='title'
@@ -102,7 +103,7 @@ export default class TodoList extends Component {
                 />
               </div>
               <div className='control' />
-              <button className='button is-info' type='submit'>
+              <button className='button is-outlined is-primary' type='submit'>
                 Add
               </button>
             </div>

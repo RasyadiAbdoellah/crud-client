@@ -43,21 +43,23 @@ export default class App extends Component {
     // To-do Item component. A direct child of To-do and CRUDS the to-do items
     // Client-side session logic
     return (
-      <div className='columns is-centered'>
-        {!isAuth ? (
-          <div className='column is-two-fifths'>
-            <Auth authDataHandler={this.authDataHandler} />
-          </div>
-        ) : (
-          <>
-            <div className='column is-one-fifth'>
-              <UserActions user={user} signOutHandler={this.signOutHandler} />
+      <div className='container'>
+        <div className='columns is-8 is-variable is-centered is-vcentered'>
+          {!isAuth ? (
+            <div className='column is-two-fifths'>
+              <Auth authDataHandler={this.authDataHandler} />
             </div>
-            <div className='column'>
-              <TodoList user={user} />
-            </div>
-          </>
-        )}
+          ) : (
+            <>
+              <div className='column is-one-fifth'>
+                <UserActions user={user} signOutHandler={this.signOutHandler} />
+              </div>
+              <div className='column'>
+                <TodoList user={user} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
     );
   }
