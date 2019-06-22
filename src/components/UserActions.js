@@ -54,10 +54,11 @@ export default class UserActions extends Component {
       })
       .catch(err => {
         console.error(err);
-        this.alertHandler('Something went wrong, try again later', true);
+        const message = err.response ? err.response.data : 'Something went wrong';
+        this.alertHandler(message, true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
         if (clearIf500(err)) {
-          this.props.signOutHandler();
+          this.props.signOutHandler(true);
         }
       });
   };
@@ -74,11 +75,12 @@ export default class UserActions extends Component {
         this.props.signOutHandler();
       })
       .catch(err => {
-        this.alertHandler('Something went wrong! Try refreshing and signing back in');
-        console.error(err.response);
+        console.error(err);
+        const message = err.response ? err.response.data : 'Something went wrong';
+        this.alertHandler(message);
         //clear local user data because the backend borked. Should force the app to re-sign-in
         if (clearIf500(err)) {
-          this.props.signOutHandler();
+          this.props.signOutHandler(true);
         }
       });
   };

@@ -46,10 +46,11 @@ export default class TodoList extends Component {
       })
       .catch(err => {
         console.error(err);
-        this.alertHandler('Something went wrong', true);
+        const message = err.response ? err.response.data : 'Something went wrong';
+        this.alertHandler(message, true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
         if (clearIf500(err)) {
-          this.props.signOutHandler();
+          this.props.signOutHandler(true);
         }
       });
   };
@@ -70,10 +71,11 @@ export default class TodoList extends Component {
       })
       .catch(err => {
         console.error(err);
-        this.alertHandler('Something went wrong', true);
+        const message = err.response ? err.response.data : 'Something went wrong';
+        this.alertHandler(message, true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
         if (clearIf500(err)) {
-          this.props.signOutHandler();
+          this.props.signOutHandler(true);
         }
       });
   };
@@ -89,10 +91,11 @@ export default class TodoList extends Component {
       })
       .catch(err => {
         console.error(err);
-        this.alertHandler('Something went wrong', true);
+        const message = err.response ? err.response.data : 'Something went wrong';
+        this.alertHandler(message, true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
         if (clearIf500(err)) {
-          this.props.signOutHandler();
+          this.props.signOutHandler(true);
         }
       });
   };
@@ -110,7 +113,7 @@ export default class TodoList extends Component {
         this.setState({ todosIsGetting: false, todosGetFailed: true });
         console.error(err);
         if (clearIf500(err)) {
-          this.props.signOutHandler();
+          this.props.signOutHandler(true);
         }
       });
   }

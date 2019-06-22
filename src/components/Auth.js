@@ -74,12 +74,11 @@ export default class Auth extends Component {
         this.props.authDataHandler(res.data);
       })
       .catch(err => {
-        console.log(err.response);
         const message = err.response ? err.response.data : 'Something went wrong';
         this.errorHandler(message);
         //clear local user data because the backend borked. Should force the app to re-sign-in
         if (clearIf500(err)) {
-          this.props.signOutHandler();
+          this.props.signOutHandler(true);
         }
       });
   };
