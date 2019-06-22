@@ -43,7 +43,7 @@ export default class App extends Component {
         <div className='columns is-8 is-variable is-centered is-vcentered'>
           {!isAuth ? (
             <div className='column is-two-fifths'>
-              <Auth authDataHandler={this.authDataHandler} />
+              <Auth authDataHandler={this.authDataHandler} signOutHandler={this.signOutHandler} />
             </div>
           ) : (
             <>
@@ -51,7 +51,7 @@ export default class App extends Component {
                 <UserActions user={user} signOutHandler={this.signOutHandler} />
               </div>
               <div className='column'>
-                <TodoList user={user} />
+                <TodoList user={user} signOutHandler={this.signOutHandler} />
               </div>
             </>
           )}

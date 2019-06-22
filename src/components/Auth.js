@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import API_URL from '../config';
+import { clearIf500 } from '../helpers';
 
 export default class Auth extends Component {
   constructor(props) {
@@ -73,11 +74,13 @@ export default class Auth extends Component {
         this.props.authDataHandler(res.data);
       })
       .catch(err => {
-        const message = err.response.data;
+        console.log(err.response);
+        const message = err.response ? err.response.data : 'Something went wrong';
         this.errorHandler(message);
         //clear local user data because the backend borked. Should force the app to re-sign-in
-        localStorage.clear()
-        sessionStorage.clear()
+        if (clearIf500(err)) {
+          this.props.signOutHandler();
+        }
       });
   };
 

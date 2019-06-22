@@ -3,6 +3,8 @@ import axios from 'axios';
 import API_URL from '../config';
 import Todo from './Todo';
 
+import { clearIf500 } from '../helpers';
+
 const route = '/todos';
 
 export default class TodoList extends Component {
@@ -46,8 +48,9 @@ export default class TodoList extends Component {
         console.error(err);
         this.alertHandler('Something went wrong', true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
-        localStorage.clear();
-        sessionStorage.clear();
+        if (clearIf500(err)) {
+          this.props.signOutHandler();
+        }
       });
   };
 
@@ -69,8 +72,9 @@ export default class TodoList extends Component {
         console.error(err);
         this.alertHandler('Something went wrong', true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
-        localStorage.clear();
-        sessionStorage.clear();
+        if (clearIf500(err)) {
+          this.props.signOutHandler();
+        }
       });
   };
 
@@ -87,8 +91,9 @@ export default class TodoList extends Component {
         console.error(err);
         this.alertHandler('Something went wrong', true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
-        localStorage.clear();
-        sessionStorage.clear();
+        if (clearIf500(err)) {
+          this.props.signOutHandler();
+        }
       });
   };
 
@@ -104,6 +109,9 @@ export default class TodoList extends Component {
       .catch(err => {
         this.setState({ todosIsGetting: false, todosGetFailed: true });
         console.error(err);
+        if (clearIf500(err)) {
+          this.props.signOutHandler();
+        }
       });
   }
 

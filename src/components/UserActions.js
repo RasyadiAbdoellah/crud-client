@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import API_URL from '../config';
+import { clearIf500 } from '../helpers';
 
 //User actions is its own component to help with readability
 export default class UserActions extends Component {
@@ -55,8 +56,9 @@ export default class UserActions extends Component {
         console.error(err);
         this.alertHandler('Something went wrong, try again later', true);
         //clear local user data because the backend borked. Should force the app to re-sign-in
-        localStorage.clear();
-        sessionStorage.clear();
+        if (clearIf500(err)) {
+          this.props.signOutHandler();
+        }
       });
   };
 
@@ -75,8 +77,9 @@ export default class UserActions extends Component {
         this.alertHandler('Something went wrong! Try refreshing and signing back in');
         console.error(err.response);
         //clear local user data because the backend borked. Should force the app to re-sign-in
-        localStorage.clear();
-        sessionStorage.clear();
+        if (clearIf500(err)) {
+          this.props.signOutHandler();
+        }
       });
   };
 
