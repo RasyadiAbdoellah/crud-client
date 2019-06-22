@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Auth from './Auth';
-import UserActions from './UserActions';
-import TodoList from './TodoList';
+import Auth from './components/Auth';
+import UserActions from './components/UserActions';
+import TodoList from './components/TodoList';
 
 export default class App extends Component {
   constructor(props) {
