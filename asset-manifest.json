@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/crud-client/static/css/main.103b76a2.chunk.css",
-    "main.js": "/crud-client/static/js/main.d24996ba.chunk.js",
-    "main.js.map": "/crud-client/static/js/main.d24996ba.chunk.js.map",
+    "main.js": "/crud-client/static/js/main.5577bfeb.chunk.js",
+    "main.js.map": "/crud-client/static/js/main.5577bfeb.chunk.js.map",
     "runtime~main.js": "/crud-client/static/js/runtime~main.ee355b39.js",
     "runtime~main.js.map": "/crud-client/static/js/runtime~main.ee355b39.js.map",
     "static/js/2.e3641bbe.chunk.js": "/crud-client/static/js/2.e3641bbe.chunk.js",
     "static/js/2.e3641bbe.chunk.js.map": "/crud-client/static/js/2.e3641bbe.chunk.js.map",
     "index.html": "/crud-client/index.html",
-    "precache-manifest.b674b21fa26c4c099d7c734b8c8ba71a.js": "/crud-client/precache-manifest.b674b21fa26c4c099d7c734b8c8ba71a.js",
+    "precache-manifest.0173ec82f31635577fc84aae8fd4aba1.js": "/crud-client/precache-manifest.0173ec82f31635577fc84aae8fd4aba1.js",
     "service-worker.js": "/crud-client/service-worker.js",
     "static/css/main.103b76a2.chunk.css.map": "/crud-client/static/css/main.103b76a2.chunk.css.map"
   }

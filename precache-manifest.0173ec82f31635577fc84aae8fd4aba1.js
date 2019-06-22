@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "43205665d46e98e69d96725b0a810525",
+    "revision": "af8543bb1def4b8f3ad5a9f225d7f8c0",
     "url": "/crud-client/index.html"
   },
   {
-    "revision": "6c0d1f43818a1d2d59a3",
+    "revision": "df41d2911cc9691b23e4",
     "url": "/crud-client/static/css/main.103b76a2.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/crud-client/static/js/2.e3641bbe.chunk.js"
   },
   {
-    "revision": "6c0d1f43818a1d2d59a3",
-    "url": "/crud-client/static/js/main.d24996ba.chunk.js"
+    "revision": "df41d2911cc9691b23e4",
+    "url": "/crud-client/static/js/main.5577bfeb.chunk.js"
   },
   {
     "revision": "9cf35034349039979bcc",
