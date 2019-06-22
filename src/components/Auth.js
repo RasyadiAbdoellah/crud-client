@@ -75,6 +75,9 @@ export default class Auth extends Component {
       .catch(err => {
         const message = err.response.data;
         this.errorHandler(message);
+        //clear local user data because the backend borked. Should force the app to re-sign-in
+        localStorage.clear()
+        sessionStorage.clear()
       });
   };
 

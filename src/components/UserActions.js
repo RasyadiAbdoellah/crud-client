@@ -54,6 +54,9 @@ export default class UserActions extends Component {
       .catch(err => {
         console.error(err);
         this.alertHandler('Something went wrong, try again later', true);
+        //clear local user data because the backend borked. Should force the app to re-sign-in
+        localStorage.clear();
+        sessionStorage.clear();
       });
   };
 
@@ -71,6 +74,9 @@ export default class UserActions extends Component {
       .catch(err => {
         this.alertHandler('Something went wrong! Try refreshing and signing back in');
         console.error(err.response);
+        //clear local user data because the backend borked. Should force the app to re-sign-in
+        localStorage.clear();
+        sessionStorage.clear();
       });
   };
 

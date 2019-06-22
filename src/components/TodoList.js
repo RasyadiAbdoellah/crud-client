@@ -45,6 +45,9 @@ export default class TodoList extends Component {
       .catch(err => {
         console.error(err);
         this.alertHandler('Something went wrong', true);
+        //clear local user data because the backend borked. Should force the app to re-sign-in
+        localStorage.clear();
+        sessionStorage.clear();
       });
   };
 
@@ -65,6 +68,9 @@ export default class TodoList extends Component {
       .catch(err => {
         console.error(err);
         this.alertHandler('Something went wrong', true);
+        //clear local user data because the backend borked. Should force the app to re-sign-in
+        localStorage.clear();
+        sessionStorage.clear();
       });
   };
 
@@ -80,6 +86,9 @@ export default class TodoList extends Component {
       .catch(err => {
         console.error(err);
         this.alertHandler('Something went wrong', true);
+        //clear local user data because the backend borked. Should force the app to re-sign-in
+        localStorage.clear();
+        sessionStorage.clear();
       });
   };
 
